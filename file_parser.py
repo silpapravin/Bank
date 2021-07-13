@@ -1,19 +1,27 @@
 from customer import Customer
 class FileParser():
+    
+    # reading data from file and storing in alist
 
-    def read_customers(self, filename): # reading from file
-       
-        fo = open(filename, "r")
-        lines = fo.readlines()
-        fo.close()
+    def read_customers(self, filename): 
         customers = []
+        try:
+            fo = open(filename, "r")
+            lines = fo.readlines()
+            fo.close()
+        except IOError:
+            print(f"Warning : couldnot open file {filename} for reading")
+            input("Return to continue....")
+            return customers
         for line in lines:
             customer = self.parse_customer_text(line)
             customers.append(customer)
         
         return customers
 
-    def parse_customer_text(self, cust_text): # parsing each customer records and storing in list#
+     # parsing each customer records and storing in list#
+
+    def parse_customer_text(self, cust_text):
 
         fields = cust_text.split("|")
 
@@ -28,9 +36,10 @@ class FileParser():
 
         return Customer(forename, surname, ppsnumber, accounttype, overdraft, accountnumber,balance,interest)
 
-    def write_customers(self, filename, customers): #writing list data into file#
-        
-        fo = open(filename, "w")       
+    #writing list data into file#
+    
+    def write_customers(self, filename, customers): 
+                    
         lines = []
         first_customer = True
         for customer in customers:
@@ -40,6 +49,11 @@ class FileParser():
                 first_customer = False
             else:
                 lines.append(f"\n{customer.file_text()}")
-        
-        fo.writelines(lines)
-        fo.close()
+
+        try:
+            fo = open(filename, "w") 
+            fo.writelines(lines)
+            fo.close()
+        except IOError:
+            print(f"Warning : couldnot open file {filename} for writing")
+            input("Return to continue....")
