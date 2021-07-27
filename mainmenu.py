@@ -17,6 +17,7 @@ class Mainmenu():
                 #Utils.clear_screen()
                 print(f"Invalid menu option [{selection}]. Press return to try again.")
                 input()
+                Utils.clear_screen()
     
     def show_user_menu(self, ds):
         print("")
@@ -100,22 +101,10 @@ class Mainmenu():
             type="DEPOSIT"
             balance=50.0
         ### overdraft validation###
-        while True: 
-            try:
-                od = str(input("Overdraft Facility [Y/N]    : "))
-                od=od.upper()
-                if (od=="Y" or od=="N" ):
-                    break
-                else:
-                    raise TypeError
-            except TypeError:
-                print("Invalid entry...Enter Y/N")
-                continue 
-        if (od.upper()=="Y"):
-            od="YES"
-        elif(od.upper()=="N"):
+        if(type=="CURRENT"):
+              od="YES"
+        elif(type=="DEPOSIT"):
             od="NO"
-
         accountno=len(ds.customers)+100 #account number automatically created#
         interest=2.0
         customer = Customer(forename, surname, ppsnumber, type, od,accountno, balance,interest)

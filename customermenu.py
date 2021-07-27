@@ -1,6 +1,9 @@
 from utils import Utils
 from file_parser import FileParser
+import mainmenu
 class Customermenu:
+   def __init__(self):
+    self.main_menu=mainmenu.Mainmenu()
 
    def Display_customer_menu(self,datastore):
         Utils.clear_screen()
@@ -11,7 +14,7 @@ class Customermenu:
         print(" 3. Cash Withdrawal")
         print(" 4. Cash Deposit")
         print(" 5. Transfer funds")
-        print(" 6. Main menu")
+        print(" 6. Back to main menu")
         choice=input("Enter your choice :  ")
         if(choice=="1"):
             self.view_customers(datastore)
@@ -35,11 +38,14 @@ class Customermenu:
         elif(choice=="6"):
             #mainmenu=Mainmenu()
             #mainmenu.show_user_menu(datastore)
+            
             file_parser = FileParser()
             file_parser.write_customers("custs.txt", datastore.customers)
-            print("Thankyou for using the system")
-            print("Application exiting.......")
-            exit()
+            Utils.clear_screen()
+            self.main_menu.display_main_menu(datastore)
+            #print("Thankyou for using the system")
+            #print("Application exiting.......")
+            #exit()
         else:
             input("Invalid Entry ...Return to continue..")
             Utils.clear_screen()
@@ -69,7 +75,7 @@ class Customermenu:
       print("")
       print("    CUSTOMER ACCOUNT INFO  ")
       print("    ----------------------")
-      ppsn=input("Enter custoner PPS number  :  ")
+      ppsn=input("Enter customer PPS number  :  ")
       print("")
       print("   Customer Name      PPSNo     Accouttype    Overdraft  Accountno    Balance    Interest(%)")
       print("===========================================================================================")
